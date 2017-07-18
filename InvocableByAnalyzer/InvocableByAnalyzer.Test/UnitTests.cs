@@ -64,7 +64,7 @@ namespace InvocableByAnalyzer.Test
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new InvocableByAnalyzerAnalyzer();
+            return new InvocableByAnalyzer();
         }
     }
 }
