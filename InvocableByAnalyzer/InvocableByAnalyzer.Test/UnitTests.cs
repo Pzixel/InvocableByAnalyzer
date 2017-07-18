@@ -50,7 +50,7 @@ namespace InvocableByAnalyzer.Test
     }";
             var expected = new DiagnosticResult
             {
-                Id = "InvocableByAnalyzer",
+                Id = InvocableByAnalyzer.DiagnosticId,
                 Message = string.Format("Class '{0}' is not allowed to call this member", "C"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
