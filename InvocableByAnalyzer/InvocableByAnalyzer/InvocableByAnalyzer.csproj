@@ -7,7 +7,7 @@
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
     <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <ProjectGuid>{0DFE1FFB-41CB-4595-8A8E-2EB38CF320F9}</ProjectGuid>
+    <ProjectGuid>{15780782-E4ED-4B45-90E6-02F947396109}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>InvocableByAnalyzer</RootNamespace>

@@ -7,7 +7,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9AE20362-5136-44F9-9854-7B8077A7EFED}</ProjectGuid>
+    <ProjectGuid>{B901BC02-61DD-4C77-8212-17A09FA4A1C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>InvocableByAnalyzer.Test</RootNamespace>
@@ -103,12 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InvocableByAnalyzer\InvocableByAnalyzer.csproj">
-      <Project>{0DFE1FFB-41CB-4595-8A8E-2EB38CF320F9}</Project>
+      <Project>{15780782-E4ED-4B45-90E6-02F947396109}</Project>
       <Name>InvocableByAnalyzer</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
