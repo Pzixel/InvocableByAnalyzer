@@ -1,48 +1,57 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeFixes;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using TestHelper;
-using InvocableByAnalyzer;
 
 namespace InvocableByAnalyzer.Test
 {
     [TestClass]
+    [SuppressMessage("ReSharper", "UseStringInterpolation")]
     public class UnitTest : CodeFixVerifier
     {
-
         //No diagnostics expected to show up
         [TestMethod]
         public void TestMethod1()
         {
-            var test = @"";
-
-            VerifyCSharpDiagnostic(test);
+            VerifyCSharpDiagnostic(@"");
         }
 
         //Diagnostic and CodeFix both triggered and checked for
         [TestMethod]
         public void TestMethod2()
         {
-            var test = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
+            const string test = @"
+    using InvocableByAnalyzer;
 
-    namespace ConsoleApplication1
+    class TypeName
     {
-        class TypeName
-        {   
+        [InvocableBy(typeof(A))]
+        public TypeName()
+        {
+
+        }
+    }
+
+    class A
+    {
+        public A()
+        {
+            var foo = new TypeName();
+        }
+    }
+
+    class B
+    {
+        public B()
+        {
+            var foo = new TypeName();
         }
     }";
             var expected = new DiagnosticResult
             {
                 Id = "InvocableByAnalyzer",
-                Message = String.Format("Type name '{0}' contains lowercase letters", "TypeName"),
+                Message = string.Format("Class '{0}' is not allowed to call this member", "B"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
@@ -51,27 +60,6 @@ namespace InvocableByAnalyzer.Test
             };
 
             VerifyCSharpDiagnostic(test, expected);
-
-            var fixtest = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-
-    namespace ConsoleApplication1
-    {
-        class TYPENAME
-        {   
-        }
-    }";
-            VerifyCSharpFix(test, fixtest);
-        }
-
-        protected override CodeFixProvider GetCSharpCodeFixProvider()
-        {
-            return new InvocableByAnalyzerCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
