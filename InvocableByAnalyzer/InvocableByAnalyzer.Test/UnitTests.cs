@@ -24,6 +24,16 @@ namespace InvocableByAnalyzer.Test
             const string test = @"
     using InvocableByAnalyzer;
 
+    public class InvocableByAttribute : Attribute
+    {
+        public Type[] AllowedTypes { get; }
+
+        public InvocableByAttribute(params Type[] allowedTypes)
+        {
+            AllowedTypes = allowedTypes;
+        }
+    }
+
     class A
     {
         [InvocableBy(typeof(B))]
@@ -50,7 +60,7 @@ namespace InvocableByAnalyzer.Test
     }";
             var expected = new DiagnosticResult
             {
-                Id = InvocableByAnalyzer.DiagnosticId,
+                Id = InvocableByDiagnosticAnalyzer.DiagnosticId,
                 Message = string.Format("Class '{0}' is not allowed to call this member", "C"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
@@ -64,7 +74,7 @@ namespace InvocableByAnalyzer.Test
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new InvocableByAnalyzer();
+            return new InvocableByDiagnosticAnalyzer();
         }
     }
 }

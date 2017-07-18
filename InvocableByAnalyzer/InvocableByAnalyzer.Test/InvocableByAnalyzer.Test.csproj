@@ -102,6 +102,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\InvocableByAnalyzer.Common\InvocableByAnalyzer.Common.csproj">
+      <Project>{4d7ebf82-0d4b-456d-af06-4a75a8099d38}</Project>
+      <Name>InvocableByAnalyzer.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InvocableByAnalyzer\InvocableByAnalyzer.csproj">
       <Project>{15780782-E4ED-4B45-90E6-02F947396109}</Project>
       <Name>InvocableByAnalyzer</Name>

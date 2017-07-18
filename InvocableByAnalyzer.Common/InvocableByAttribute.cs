@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InvocableByAnalyzer
+namespace InvocableByAnalyzer.Common
 {
     public class InvocableByAttribute : Attribute
     {

@@ -1,14 +1,14 @@
-using System;
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
+using InvocableByAnalyzer.Common;
 
 namespace InvocableByAnalyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class InvocableByAnalyzer : DiagnosticAnalyzer
+    public class InvocableByDiagnosticAnalyzer : DiagnosticAnalyzer
     {
         public const string DiagnosticId = "InvocableByAnalyzer";
 
@@ -29,7 +29,7 @@ namespace InvocableByAnalyzer
         private static void AnalyzeSymbol(SyntaxNodeAnalysisContext context)
         {
             var invocationSymbolInfo = context.SemanticModel.GetSymbolInfo(context.Node);
-            var invocableByAttributeData = invocationSymbolInfo.Symbol.GetAttributes().FirstOrDefault(data => data.AttributeClass.Name == "InvocableBy");
+            var invocableByAttributeData = invocationSymbolInfo.Symbol.GetAttributes().FirstOrDefault(data => data.AttributeClass.Name == nameof(InvocableByAttribute));
             if (invocableByAttributeData == null)
                 return;
             var allowedTypes = invocableByAttributeData.ConstructorArguments.Single();

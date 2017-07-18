@@ -34,8 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="InvocableByAnalyzer.cs" />
-    <Compile Include="InvocableByAttribute.cs" />
+    <Compile Include="InvocableByDiagnosticAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -112,6 +111,12 @@
       <HintPath>..\..\packages\System.Reflection.Metadata.1.0.21\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\InvocableByAnalyzer.Common\InvocableByAnalyzer.Common.csproj">
+      <Project>{4d7ebf82-0d4b-456d-af06-4a75a8099d38}</Project>
+      <Name>InvocableByAnalyzer.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Target Name="AfterBuild">
