@@ -23,9 +23,6 @@ namespace InvocableByAnalyzer.Test
         {
             const string test = @"
     using System;
-    using System.Diagnostics.CodeAnalysis;
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.Diagnostics;
 
     public class InvocableByAttribute : Attribute
     {
