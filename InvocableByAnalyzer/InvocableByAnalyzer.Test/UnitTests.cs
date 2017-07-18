@@ -24,20 +24,12 @@ namespace InvocableByAnalyzer.Test
             const string test = @"
     using InvocableByAnalyzer;
 
-    class TypeName
-    {
-        [InvocableBy(typeof(A))]
-        public TypeName()
-        {
-
-        }
-    }
-
     class A
     {
+        [InvocableBy(typeof(B))]
         public A()
         {
-            var foo = new TypeName();
+
         }
     }
 
@@ -45,13 +37,21 @@ namespace InvocableByAnalyzer.Test
     {
         public B()
         {
-            var foo = new TypeName();
+            var foo = new A();
+        }
+    }
+
+    class C
+    {
+        public C()
+        {
+            var foo = new A();
         }
     }";
             var expected = new DiagnosticResult
             {
                 Id = "InvocableByAnalyzer",
-                Message = string.Format("Class '{0}' is not allowed to call this member", "B"),
+                Message = string.Format("Class '{0}' is not allowed to call this member", "C"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {

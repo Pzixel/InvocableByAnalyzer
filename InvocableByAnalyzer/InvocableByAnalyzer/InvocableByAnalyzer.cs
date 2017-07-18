@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace InvocableByAnalyzer
@@ -21,17 +23,16 @@ namespace InvocableByAnalyzer
 
         public override void Initialize(AnalysisContext context)
         {
-            // TODO: Consider registering other actions that act on syntax instead of or in addition to symbols
-            // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Analyzer%20Actions%20Semantics.md for more information
-            context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.Method);
+            context.RegisterSyntaxNodeAction(AnalyzeSymbol, SyntaxKind.ObjectCreationExpression);
         }
 
-        private static void AnalyzeSymbol(SymbolAnalysisContext context)
+        private static void AnalyzeSymbol(SyntaxNodeAnalysisContext context)
         {
-            var method = (IMethodSymbol) context.Symbol;
-            var invocableByAttributeData = method.GetAttributes().FirstOrDefault(data => data.AttributeClass.Name == "InvocableBy");
+            var invocationSymbolInfo = context.SemanticModel.GetSymbolInfo(context.Node);
+            var invocableByAttributeData = invocationSymbolInfo.Symbol.GetAttributes().FirstOrDefault(data => data.AttributeClass.Name == "InvocableBy");
             if (invocableByAttributeData == null)
                 return;
+            var allowedTypes = invocableByAttributeData.ConstructorArguments.Single();
         }
     }
 }
