@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using InvocableByAnalyzer.Common;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace InvocableByAnalyzer
 {
@@ -32,7 +34,23 @@ namespace InvocableByAnalyzer
             var invocableByAttributeData = invocationSymbolInfo.Symbol.GetAttributes().FirstOrDefault(data => data.AttributeClass.Name == nameof(InvocableByAttribute));
             if (invocableByAttributeData == null)
                 return;
-            var allowedTypes = invocableByAttributeData.ConstructorArguments.Single();
+            var parentBlock = GetContainingType(context.Node);
+            var parentBlockSymbol = context.SemanticModel.GetDeclaredSymbol(parentBlock);
+            var allowedTypes = invocableByAttributeData.ConstructorArguments.Single().Values;
+            if (!allowedTypes.Any(type => type.Value == parentBlockSymbol))
+            {
+                context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), parentBlock.Identifier.ValueText));
+            }
+        }
+
+        private static TypeDeclarationSyntax GetContainingType(SyntaxNode contextNode)
+        {
+            while (true)
+            {
+                if (contextNode is TypeDeclarationSyntax typeDeclarationSyntax)
+                    return typeDeclarationSyntax;
+                contextNode = contextNode.Parent;
+            }
         }
     }
 }

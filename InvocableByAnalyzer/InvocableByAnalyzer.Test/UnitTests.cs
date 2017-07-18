@@ -22,7 +22,10 @@ namespace InvocableByAnalyzer.Test
         public void TestMethod2()
         {
             const string test = @"
-    using InvocableByAnalyzer;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.Diagnostics;
 
     public class InvocableByAttribute : Attribute
     {
@@ -62,10 +65,10 @@ namespace InvocableByAnalyzer.Test
             {
                 Id = InvocableByDiagnosticAnalyzer.DiagnosticId,
                 Message = string.Format("Class '{0}' is not allowed to call this member", "C"),
-                Severity = DiagnosticSeverity.Warning,
+                Severity = DiagnosticSeverity.Error,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", 11, 15)
+                            new DiagnosticResultLocation("Test0.cs", 38, 23)
                         }
             };
 
