@@ -65,7 +65,7 @@ namespace InvocableByAnalyzer.Test
                 Severity = DiagnosticSeverity.Error,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", 38, 23)
+                            new DiagnosticResultLocation("Test0.cs", 35, 23)
                         }
             };
 
